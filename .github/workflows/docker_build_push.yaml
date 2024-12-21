@@ -1,0 +1,57 @@
+name: Build and push docker image
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Every day at 3 AM
+  workflow_dispatch: # Allows manual triggering of the action
+
+jobs:
+  build-and-push-docker:
+    name: Build and Push Docker Image to Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get the latest release version
+        id: get_version
+        run: |
+          latest_version=$(curl -s "https://api.github.com/repos/alexanderhirmer/kasm-ubuntu-kde/releases/latest" | jq -r .tag_name || echo "0.0.0")
+          echo "latest_version=$latest_version" >> $GITHUB_ENV
+          echo "Latest version: $latest_version"
+
+      - name: Get Build Number from Docker Hub
+        id: get_build_number
+        run: |
+          latest_tag=$(curl -s -u "$DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/alexanderhirmer/kasm-ubuntu-kde/tags" | jq -r ".results[].name" | grep "^${{ env.latest_version }}-" | sort -r | head -n 1)
+          if [ -z "$latest_tag" ]; then
+            new_build_number="0001"
+          else
+            last_build_number=$(echo "$latest_tag" | sed "s/${{ env.latest_version }}-//")
+            new_build_number=$(printf "%04d" $((10#$last_build_number + 1)))
+          fi
+          new_tag="${{ env.latest_version }}-$new_build_number"
+          echo "build_number=$new_build_number" >> $GITHUB_ENV
+          echo "new_tag=$new_tag" >> $GITHUB_ENV
+          echo "New tag: $new_tag"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            alexanderhirmer/kasm-ubuntu-kde:${{ env.new_tag }}
+            alexanderhirmer/kasm-ubuntu-kde:latest
