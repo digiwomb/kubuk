@@ -64,7 +64,7 @@ jobs:
             ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.latest_version }}
             ${{ vars.DOCKERHUB_REPOSITORY }}:latest
 
-      - name: Build and push
+      - name: Build and push to dev
         if: ${{ env.BRANCH_NAME != 'main' }}
         uses: docker/build-push-action@v6
         with:
