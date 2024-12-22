@@ -4,6 +4,7 @@ FROM lscr.io/linuxserver/webtop:ubuntu-kde
 # Install dependencies and tools
 RUN apt-get update && apt-get install -y \
     software-properties-common \
+    nano \
     curl \
     sudo \
     gnupg \
