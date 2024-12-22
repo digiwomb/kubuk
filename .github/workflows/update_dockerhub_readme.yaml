@@ -20,5 +20,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: digiwomb/kubuk
+          repository: ${{ vars.DOCKERHUB_REPOSITORY }}
           readme-filepath: ./README.md
