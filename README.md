@@ -2,6 +2,8 @@
 
 [![Version](https://img.shields.io/github/tag/digiwomb/kubuk.svg?maxAge=360&label=version)](https://github.com/digiwomb/kubuk/releases/latest)
 [![License](https://img.shields.io/github/license/digiwomb/kubuk.svg)](https://github.com/digiwomb/kubuk/blob/main/LICENSE)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/digiwomb/kubuk)](https://github.com/digiwomb/kubuk)
+
 
 KUbuK stands for **K**asm **Ubu**ntu with **K**DE. This setup combines the Kasm workspaces environment, an Ubuntu operating system, and the KDE desktop environment, offering a flexible and user-friendly interface tailored for diverse needs.
 
