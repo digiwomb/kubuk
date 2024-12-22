@@ -7,6 +7,8 @@ RUN apt-get update && apt upgrade -y && apt-get install -y \
     nano \
     curl \
     sudo \
+    net-tools \
+    htop \
     gnupg \
     unzip \
     wget \
