@@ -5,12 +5,16 @@ on:
     - cron: '0 3 * * *' # Every day at 3 AM
   workflow_dispatch: # Allows manual triggering of the action
 
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+
 jobs:
   build-and-push-docker:
     name: Build and push docker image to dockerhub
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Get the latest release version
         id: get_version
         run: |
@@ -51,6 +55,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push
+        if: ${{ env.BRANCH_NAME == 'main' }}
         uses: docker/build-push-action@v6
         with:
           push: true
@@ -58,3 +63,11 @@ jobs:
             ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.new_tag }}
             ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.latest_version }}
             ${{ vars.DOCKERHUB_REPOSITORY }}:latest
+
+      - name: Build and push
+        if: ${{ env.BRANCH_NAME != 'main' }}
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            ${{ vars.DOCKERHUB_REPOSITORY }}:dev
