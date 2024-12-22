@@ -28,7 +28,7 @@ jobs:
           if [ -z "$latest_tag" ]; then
             new_build_number="0001"
           else
-            last_build_number=$(echo "$latest_tag" | sed "s/${{ env.latest_version }}-//")
+            last_build_number=$(echo -e "$latest_tag" | awk -F'_' '{print $2}')
             new_build_number=$(printf "%04d" $((10#$last_build_number + 1)))
           fi
           new_tag="${{ env.latest_version }}_$new_build_number"
