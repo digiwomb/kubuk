@@ -24,14 +24,14 @@ jobs:
       - name: Get Build Number from Docker Hub
         id: get_build_number
         run: |
-          latest_tag=$(curl -s -u "$DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/digiwomb/kubuk/tags" | jq -r ".results[].name" | grep "^${{ env.latest_version }}-" | sort -r | head -n 1)
+          latest_tag=$(curl -s -u "$DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/digiwomb/kubuk/tags" | jq -r ".results[].name" | grep "^${{ env.latest_version }}_" | sort -r | head -n 1)
           if [ -z "$latest_tag" ]; then
             new_build_number="0001"
           else
             last_build_number=$(echo "$latest_tag" | sed "s/${{ env.latest_version }}-//")
             new_build_number=$(printf "%04d" $((10#$last_build_number + 1)))
           fi
-          new_tag="${{ env.latest_version }}-$new_build_number"
+          new_tag="${{ env.latest_version }}_$new_build_number"
           echo "build_number=$new_build_number" >> $GITHUB_ENV
           echo "new_tag=$new_tag" >> $GITHUB_ENV
           echo "New tag: $new_tag"
