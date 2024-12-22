@@ -1,6 +1,8 @@
-# Kasm Workspaces Docker Image
+# KUbuK
 
-This Docker image is designed to be a powerful and versatile development and productivity environment, fully optimized for use with **Kasm Workspaces**. It includes a wide range of pre-installed tools and configurations, making it ideal for developers, system administrators, and power users.
+KUbuK stands for **K**asm **Ubu**ntu with **K**DE. This setup combines the Kasm workspaces environment, an Ubuntu operating system, and the KDE desktop environment, offering a flexible and user-friendly interface tailored for diverse needs.
+
+This Docker image is designed to be a versatile base for an development environment, fully optimized for use with **Kasm Workspaces**. It includes a wide range of pre-installed tools and configurations, making it ideal for developers, system administrators, and power users.
 
 ## Base Image
 
