@@ -11,6 +11,18 @@ This Docker image is designed to be a versatile base for an development environm
 
 The image is built upon the **lscr.io/linuxserver/webtop:ubuntu-kde** base image, leveraging its lightweight KDE desktop environment for an optimal user experience.
 
+## Configuration recommendation
+
+I recommend copying the "Ubuntu KDE" workspace from https://kasmregistry.linuxserver.io and then entering digiwomb/kubuk:latest as the Docker image. I would also enter the following under "Docker Exec Config".
+
+    {
+        "first_launch": {
+            "cmd": "bash -c 'rm -rf ~/.config/chromium/Singleton*'"
+        }
+    }
+
+This will delete any active Chromium sessions before the desktop is started. These sessions can remain because Chromium is not completely terminated when the desktop is destroyed.
+
 ## Included Software
 
 ### Core Tools and Utilities
@@ -47,5 +59,6 @@ This image is designed for users who need:
 - A ready-to-use development environment with tools for programming, remote server management, and secure credential handling.
 - The flexibility to install additional software via Homebrew.
 - Seamless integration with Kasm Workspaces for performance and productivity.
+
 
 ---
