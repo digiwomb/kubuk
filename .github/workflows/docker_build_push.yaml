@@ -54,4 +54,5 @@ jobs:
           push: true
           tags: |
             digiwomb/kubuk:${{ env.new_tag }}
+            digiwomb/kubuk:${{ env.latest_version }}
             digiwomb/kubuk:latest
