@@ -2,11 +2,13 @@
 FROM lscr.io/linuxserver/webtop:ubuntu-kde
 
 # Install dependencies and tools
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt upgrade -y && apt-get install -y \
     software-properties-common \
     nano \
     curl \
     sudo \
+    net-tools \
+    htop \
     gnupg \
     unzip \
     wget \
