@@ -1,4 +1,5 @@
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/gbraad)
+[![Version](https://img.shields.io/github/tag/digiwomb/kubuk.svg?maxAge=360&label=version)](https://github.com/digiwomb/kubuk/releases/latest)
+[![License](https://img.shields.io/github/license/digiwomb/kubuk.svg)](https://github.com/digiwomb/kubuk/blob/main/LICENSE)
 
 # KUbuK
 
