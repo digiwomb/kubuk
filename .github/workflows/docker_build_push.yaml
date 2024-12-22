@@ -17,14 +17,14 @@ jobs:
       - name: Get the latest release version
         id: get_version
         run: |
-          latest_version=$(curl -s "https://api.github.com/repos/digiwomb/kubuk/releases/latest" | jq -r .tag_name || echo "0.0.0")
+          latest_version=$(curl -s "https://api.github.com/repos/${{ vars.DOCKERHUB_REPOSITORY }}/releases/latest" | jq -r .tag_name || echo "0.0.0")
           echo "latest_version=$latest_version" >> $GITHUB_ENV
           echo "Latest version: $latest_version"
 
       - name: Get Build Number from Docker Hub
         id: get_build_number
         run: |
-          latest_tag=$(curl -s -u "$DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/digiwomb/kubuk/tags" | jq -r ".results[].name" | grep "^${{ env.latest_version }}_" | sort -r | head -n 1)
+          latest_tag=$(curl -s -u "$DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/${{ vars.DOCKERHUB_REPOSITORY }}/tags" | jq -r ".results[].name" | grep "^${{ env.latest_version }}_" | sort -r | head -n 1)
           if [ -z "$latest_tag" ]; then
             new_build_number="0001"
           else
@@ -53,6 +53,6 @@ jobs:
         with:
           push: true
           tags: |
-            digiwomb/kubuk:${{ env.new_tag }}
-            digiwomb/kubuk:${{ env.latest_version }}
-            digiwomb/kubuk:latest
+            ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.new_tag }}
+            ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.latest_version }}
+            ${{ vars.DOCKERHUB_REPOSITORY }}:latest
