@@ -1,3 +1,5 @@
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/gbraad)
+
 # KUbuK
 
 KUbuK stands for **K**asm **Ubu**ntu with **K**DE. This setup combines the Kasm workspaces environment, an Ubuntu operating system, and the KDE desktop environment, offering a flexible and user-friendly interface tailored for diverse needs.
