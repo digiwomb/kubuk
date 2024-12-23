@@ -15,15 +15,31 @@ The image is built upon the **lscr.io/linuxserver/webtop:ubuntu-kde** base image
 
 ## Configuration recommendation
 
-I recommend copying the "Ubuntu KDE" workspace from https://kasmregistry.linuxserver.io and then entering digiwomb/kubuk:latest as the Docker image. I would also enter the following under "Docker Exec Config".
+I recommend copying the "Ubuntu KDE" workspace from https://kasmregistry.linuxserver.io and then entering digiwomb/kubuk:latest as the Docker image. I would also add the following file mapping config.
 
-    {
-        "first_launch": {
-            "cmd": "bash -c 'rm -rf ~/.config/chromium/Singleton*'"
-        }
-    }
+| Field | Value |
+|----------|----------|
+| Type    | Text   |
+| Name    | kasm_post_run_user.sh   |
+| Description    | kasm_post_run_user.sh  |
+| Destination Path | /dockerstartup/kasm_post_run_user.sh |
+| Executable | yes |
+| Writable | no|
 
-This will delete any active Chromium sessions before the desktop is started. These sessions can remain because Chromium is not completely terminated when the desktop is destroyed.
+    #!/usr/bin/env bash
+
+    # delete abandoned chromium sessions
+    rm -rf ~/.config/chromium/Singleton*
+
+    # add paths
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
+    if ! grep -Fxq 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' "/home/kasm-user/.bashrc"; then
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/kasm-user/.bashrc
+    fi
+
+This will delete any active Chromium sessions before the desktop is started. These sessions can remain because Chromium is not completely terminated when the desktop is destroyed. Also paths for e. g. brew command are added.
 
 ## Included Software
 
