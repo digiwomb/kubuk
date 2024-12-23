@@ -60,7 +60,7 @@ RUN sudo -u kasm-user /bin/bash -c "code --install-extension damms005.devdb \
 
 # Move VS Code extensions to /usr/share to make them available systemwide
 RUN rm /home/kasm-user/.vscode/extensions/extensions.json
-RUN cp -rd /home/kasm-user/.vscode/extensions/* Cusr/share/code/resources/app/extensions/*
+RUN cp -rd /home/kasm-user/.vscode/extensions/* /usr/share/code/resources/app/extensions/*
 
 # Install Termius
 RUN wget -q https://www.termius.com/download/linux/Termius.deb -O termius.deb \
