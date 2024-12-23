@@ -31,11 +31,15 @@ I recommend copying the "Ubuntu KDE" workspace from https://kasmregistry.linuxse
     # delete abandoned chromium sessions
     rm -rf ~/.config/chromium/Singleton*
 
-    # create path to brew command
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/kasm-user/.bashrc
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    # add paths
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
+    if ! grep -Fxq 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' "/home/kasm-user/.bashrc"; then
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/kasm-user/.bashrc
+    fi
 
-This will delete any active Chromium sessions before the desktop is started. These sessions can remain because Chromium is not completely terminated when the desktop is destroyed.
+This will delete any active Chromium sessions before the desktop is started. These sessions can remain because Chromium is not completely terminated when the desktop is destroyed. Also paths for e. g. brew command are added.
 
 ## Included Software
 
