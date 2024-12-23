@@ -58,6 +58,10 @@ RUN sudo -u kasm-user /bin/bash -c "code --install-extension damms005.devdb \
     && code --install-extension visualstudioexptteam.vscodeintellicode \
     && code --install-extension yzhang.markdown-all-in-one"
 
+# Move VS Code extensions to /usr/share to make them available systemwide
+RUN rm /home/kasm-user/.vscode/extensions/extensions.json
+RUN cp -rd /home/kasm-user/.vscode/extensions/* Cusr/share/code/resources/app/extensions/*
+
 # Install Termius
 RUN wget -q https://www.termius.com/download/linux/Termius.deb -O termius.deb \
     && apt-get install -y ./termius.deb \
@@ -71,7 +75,3 @@ RUN apt purge firefox -y \
 RUN wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
 RUN /bin/bash -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
 RUN apt update && apt install github-desktop -y
-
-# Move VS Code extensions to /usr/share to make them available systemwide
-RUN rm /home/kasm-user/.vscode/extensions/extensions.json
-RUN cp -rd /home/kasm-user/.vscode/extensions/* Cusr/share/code/resources/app/extensions/*
