@@ -14,18 +14,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Get the latest release version
         id: get_version
         run: |
-          latest_version=$(curl -s "https://api.github.com/repos/${{ vars.DOCKERHUB_REPOSITORY }}/releases/latest" | jq -r .tag_name || echo "0.0.0")
+          latest_version=$(curl -s "https://api.github.com/repos/${{ vars.DOCKERHUB_REPOSITORY }}/releases/latest" | jq -r .tag_name)
+          if [[ $latest_version = 'null' ]]; then
+            latest_version=$(curl -s "https://api.github.com/repos/${{ vars.DOCKERHUB_REPOSITORY }}/releases" | jq -r 'map(select(.prerelease)) | first | .tag_name')
+          fi
           echo "latest_version=$latest_version" >> $GITHUB_ENV
           echo "Latest version: $latest_version"
 
       - name: Checkout Repository
+        if: ${{ env.BRANCH_NAME == 'main' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.latest_version }}
+
+      - name: Checkout Repository from dev
+        if: ${{ env.BRANCH_NAME != 'main' }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH_NAME }}
 
       - name: Get Build Number from Docker Hub
         id: get_build_number

@@ -2,13 +2,11 @@
 FROM lscr.io/linuxserver/webtop:ubuntu-kde
 
 # Install dependencies and tools
-RUN apt-get update && apt upgrade -y && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     software-properties-common \
     nano \
     curl \
     sudo \
-    net-tools \
-    htop \
     gnupg \
     unzip \
     wget \
@@ -68,3 +66,8 @@ RUN wget -q https://www.termius.com/download/linux/Termius.deb -O termius.deb \
 # Uninstall Firefox
 RUN apt purge firefox -y \
     && apt autoremove -y
+
+# Install GitHub Desktop
+RUN wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
+RUN /bin/bash -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
+RUN apt update && apt install github-desktop -y
