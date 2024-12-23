@@ -49,7 +49,8 @@ This will delete any active Chromium sessions before the desktop is started. The
 - **Visual Studio Code (VS Code)**: A flexible, powerful code editor with essential extensions pre-installed (see below).
 - **KeepassXC**: A secure and open-source password manager.
 - **Termius**: A modern SSH client for managing remote servers.
-- Common utilities: `curl`, `git`, `wget`, `unzip`, `gnupg`, `build-essential`, and certificate management tools.
+- **GitHub desktop**: 
+- Common utilities: `curl`, `git`, `wget`, `unzip`, `gnupg`, `build-essential`, `htop`, `net-tools` and certificate management tools.
 
 ### Homebrew Integration
 Homebrew is pre-installed for the **kasm-user** and configured in the environment. It can be used to easily install and manage additional software and libraries. The image includes:

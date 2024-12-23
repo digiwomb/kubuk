@@ -58,6 +58,10 @@ RUN sudo -u kasm-user /bin/bash -c "code --install-extension damms005.devdb \
     && code --install-extension visualstudioexptteam.vscodeintellicode \
     && code --install-extension yzhang.markdown-all-in-one"
 
+# Move VS Code extensions to /usr/share to make them available systemwide
+RUN rm /home/kasm-user/.vscode/extensions/extensions.json
+RUN mv /home/kasm-user/.vscode/extensions/* /usr/share/code/resources/app/extensions/
+
 # Install Termius
 RUN wget -q https://www.termius.com/download/linux/Termius.deb -O termius.deb \
     && apt-get install -y ./termius.deb \
